@@ -194,8 +194,6 @@ typedef struct {
                                    For example, "IP", "IPV6", "IPV4V6", or "PPP". */
     char *          apn;        /* ignored */
     char *          address;    /* An address, e.g., "192.0.1.3" or "2001:db8::1". */
-    int             inactive_reason; /* HTC added filler field */
-    int             unknown_field; /* HTC added filler field */
 } RIL_Data_Call_Response_v4;
 
 /*
@@ -3800,6 +3798,17 @@ typedef struct {
  */
 #define RIL_UNSOL_VOICE_RADIO_TECH_CHANGED 1035
 
+/**
+ * Custom responses for HTCQualcommRIL.java
+ */
+#define RIL_UNSOL_ENTER_LPM 1523
+#define RIL_UNSOL_CDMA_3G_INDICATOR 3009
+#define RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR 3012
+#define RIL_UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL 3020
+#define RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE 6002
+#define RIL_UNSOL_RESPONSE_VOICE_RADIO_TECH_CHANGED 21004
+#define RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED 21005
+#define RIL_UNSOL_RESPONSE_DATA_NETWORK_STATE_CHANGED 21007
 
 /***********************************************************************/
 
