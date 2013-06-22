@@ -39,9 +39,6 @@ TARGET_KERNEL_CONFIG := holiday_defconfig
 # Use libril in the device tree
 BOARD_PROVIDES_LIBRIL := true
 
-# Touchscreen
-BOARD_USE_LEGACY_TOUCHSCREEN := true
-
 # GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := holiday
 

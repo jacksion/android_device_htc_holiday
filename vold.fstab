@@ -4,3 +4,4 @@
 # Mounts the first usable partition of the specified device
 dev_mount sdcard /storage/sdcard0 36 /devices/platform/msm_sdcc.1/mmc_host/mmc0
 dev_mount external_sd /storage/sdcard1 auto /devices/platform/msm_sdcc.3/mmc_host
+dev_mount sda /storage/usbdisk auto /devices/platform/msm_hsusb_host/usb
