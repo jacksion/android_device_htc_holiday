@@ -12,7 +12,7 @@ on early-init
     symlink /storage/sdcard1 /external_sd
     symlink /storage/sdcard1 /mnt/external_sd
     symlink /storage/usbdisk /usbdisk
-    symlink /storage/usbdisk  /mnt/usbdisk
+    symlink /storage/usbdisk /mnt/usbdisk
 
     export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
@@ -82,6 +82,9 @@ on emmc-fs
     symlink /system/vendor/firmware/fw_bcmdhd.bin /vendor/firmware/fw_bcmdhd.bin
     symlink /system/vendor/firmware/fw_bcmdhd_apsta.bin /vendor/firmware/fw_bcmdhd_apsta.bin
     symlink /system/vendor/firmware/fw_bcmdhd_p2p.bin /vendor/firmware/fw_bcmdhd_p2p.bin
+
+    # TEMP HACK 
+    symlink /system/vendor/lib /vendor/lib
 
 on post-fs-data
     # double check the perms and set owner
@@ -361,8 +364,8 @@ service qmiproxy /system/bin/qmiproxy
     disabled
 
 service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p25 /dev/block/mmcblk0p26 NULL NULL /dev/block/mmcblk0p27 /dev/block/mmcblk0p28 /dev/block/mmcblkp20
+    class core
     user root
-    disabled
 
 service ril-daemon /system/bin/rild
     class main
@@ -374,6 +377,7 @@ service ril-daemon /system/bin/rild
 service wpa_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c /data/misc/wifi/wpa_supplicant.conf
     user root
     group wifi inet
+    class main
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
