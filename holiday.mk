@@ -35,15 +35,13 @@ $(call inherit-product, device/htc/msm8660-common/bcm_hcd.mk)
 
 # Wifi
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
-PRODUCT_PACKAGES += \
-    hostapd.conf
 
 # HTC BT audio config
 PRODUCT_COPY_FILES += device/htc/holiday/dsp/AudioBTID.csv:system/etc/AudioBTID.csv
 
 # vold config
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/vold.fstab:system/etc/vold.fstab
+    device/htc/holiday/configs/vold.fstab:system/etc/vold.fstab
 
 # Sound DSP
 PRODUCT_COPY_FILES += \
@@ -123,6 +121,14 @@ PRODUCT_COPY_FILES += \
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+
+# Adreno Drivers
+PRODUCT_COPY_FILES += \
+    device/htc/holiday/firmware/a225_pfp.fw:system/etc/firmware/a225_pfp.fw \
+    device/htc/holiday/firmware/a225_pm4.fw:system/etc/firmware/a225_pm4.fw \
+    device/htc/holiday/firmware/a225p5_pm4.fw:system/etc/firmware/a225p5_pm4.fw \
+    device/htc/holiday/firmware/yamato_pfp.fw:system/etc/firmware/yamato_pfp.fw \
+    device/htc/holiday/firmware/yamato_pm4.fw:system/etc/firmware/yamato_pm4.fw
 
 # Extra properties
 PRODUCT_PROPERTY_OVERRIDES += \
