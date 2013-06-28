@@ -30,6 +30,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     gps.holiday
 
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+    make_ext4fs \
+    e2fsck \
+    setup_fs
+
 # Bluetooth
 $(call inherit-product, device/htc/msm8660-common/bcm_hcd.mk)
 

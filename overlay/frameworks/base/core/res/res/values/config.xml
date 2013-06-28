@@ -159,6 +159,7 @@
     <!-- An Array of "[ConnectivityManager connectionType],
          [# simultaneous connection types]"  -->
     <string-array translatable="false" name="radioAttributes">
+        <item>"6,1"</item>
         <item>"1,1"</item>
         <item>"0,1"</item>
         <item>"7,1"</item>
@@ -169,6 +170,7 @@
          be empty.  An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
         <item>"rndis0"</item>
+        <item>"usb0"</item>
     </string-array>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
@@ -192,6 +194,7 @@
         <item>0</item>
         <item>1</item>
         <item>5</item>
+        <item>6</item>
         <item>7</item>
     </integer-array>
 
@@ -210,21 +213,5 @@
     <!-- The VoiceMail default value is displayed to my own number if it is true -->
     <bool name="config_telephony_use_own_number_for_voicemail">true</bool>
 
-    <!-- TODO We dont have different firmware for wifi modes, prevent reloading it -->
-    <!--bool name="config_wifi_ap_firmware_reload">false</bool -->
-    <!-- Hardware 'face' keys present on the device, stored as a bit field.
-         This integer should equal the sum of the corresponding value for each
-         of the following keys present:
-             1 - Home
-             2 - Back
-             4 - Menu
-             8 - Search
-            16 - App switch
-         For example, a device with Home, Back and Menu keys would set this
-         config to 7. -->
-    <integer name="config_deviceHardwareKeys">7</integer>
-
-    <!-- The default iface on which to monitor data use -->
-    <string name="config_datause_iface">rmnet_sdio0</string>
 
 </resources>
