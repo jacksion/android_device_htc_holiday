@@ -30,17 +30,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     gps.holiday
 
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-    make_ext4fs \
-    e2fsck \
-    setup_fs
-
 # Bluetooth
 $(call inherit-product, device/htc/msm8660-common/bcm_hcd.mk)
 
 # Wifi
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
+PRODUCT_PACKAGES += \
+    hostapd.conf
 
 # HTC BT audio config
 PRODUCT_COPY_FILES += device/htc/holiday/dsp/AudioBTID.csv:system/etc/AudioBTID.csv
