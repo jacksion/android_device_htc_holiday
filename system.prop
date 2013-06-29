@@ -29,6 +29,12 @@ persist.rild.ril.ltedrtable=max_retries=infinite,10000
 ro.use_data_netmgrd=true
 persist.data_netmgrd_nint=11
 
+#
+# GooManger
+#
+ro.goo.developerid=Albinoman887
+ro.goo.rom=TeamHydraCM
+
 # Holiday RIL  
 ro.ril.enable.dtm = 0	  	
 ro.ril.gprsclass = 12	  	
