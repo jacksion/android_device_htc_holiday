@@ -14,6 +14,18 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
+
+### msm8660-common overrides ###
+# override duplicate configs from common repo
+
+# Media configuration
+PRODUCT_COPY_FILES += \
+    device/htc/msm8660-common/configs/media_codecs.xml:system/etc/media_codecs.xml \
+    device/htc/msm8660-common/configs/media_profiles.xml:system/etc/media_profiles.xml
+
+### msm8660-common overrides END ###
+
+
 # Inherit common msm8660 configs
 $(call inherit-product, device/htc/msm8660-common/msm8660.mk)
 
