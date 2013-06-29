@@ -20,6 +20,7 @@ bin/rmt_storage
 bin/thermald
 bin/wireless_modem
 bin/zchgd
+init
 
 # Audio
 lib/libhtc_acoustic.so
