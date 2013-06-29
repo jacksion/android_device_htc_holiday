@@ -41,9 +41,10 @@ PRODUCT_PACKAGES += \
 # HTC BT audio config
 PRODUCT_COPY_FILES += device/htc/holiday/dsp/AudioBTID.csv:system/etc/AudioBTID.csv
 
-# vold config
+# configs
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/configs/vold.fstab:system/etc/vold.fstab
+    device/htc/holiday/configs/vold.fstab:system/etc/vold.fstab \
+    device/htc/pyramid/configs/99kernel:system/etc/init.d/99kernel
 
 # Sound DSP
 PRODUCT_COPY_FILES += \
