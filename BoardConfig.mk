@@ -46,7 +46,7 @@ BOARD_PROVIDES_LIBRIL := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := holiday
 
 # USB
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun%d/file
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun0/file
 
 # Wifi
 -include device/htc/msm8660-common/bcmdhd.mk
