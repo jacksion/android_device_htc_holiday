@@ -375,7 +375,7 @@ service zchgd_onmode /system/bin/zchgd -onmode
     oneshot
 
 on property:init.svc.bootanim=stopped
-    start mpdecision
+    #start mpdecision
 
 on property:ro.emmc=1
     start rmt_storage
