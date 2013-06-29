@@ -132,6 +132,16 @@ PRODUCT_COPY_FILES += \
     device/htc/holiday/firmware/yamato_pfp.fw:system/etc/firmware/yamato_pfp.fw \
     device/htc/holiday/firmware/yamato_pm4.fw:system/etc/firmware/yamato_pm4.fw
 
+# Wifi Firmware
+PRODUCT_COPY_FILES += \
+    device/htc/holiday/firmware/BCM4330B1.hcd:system/etc/firmware/BCM4330B1.hcd \
+    device/htc/holiday/firmware/fw_bcm4330_apsta_b1.bin:system/etc/firmware/fw_bcm4330_apsta_b1.bin \
+    device/htc/holiday/firmware/fw_bcm4330_apsta_b2.bin:system/etc/firmware/fw_bcm4330_apsta_b2.bin \
+    device/htc/holiday/firmware/fw_bcm4330_b1.bin:system/etc/firmware/fw_bcm4330_b1.bin \
+    device/htc/holiday/firmware/fw_bcm4330_b2.bin:system/etc/firmware/fw_bcm4330_b2.bin \
+    device/htc/holiday/firmware/fw_bcm4330_p2p_b1.bin:system/etc/firmware/fw_bcm4330_p2p_b1.bin \
+    device/htc/holiday/firmware/fw_bcm4330_p2p_b2.bin:system/etc/firmware/fw_bcm4330_p2p_b2.bin
+
 # Extra properties
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.setupwizard.enable_bypass=1 \
