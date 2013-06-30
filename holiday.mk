@@ -56,7 +56,7 @@ PRODUCT_COPY_FILES += device/htc/holiday/dsp/AudioBTID.csv:system/etc/AudioBTID.
 # configs
 PRODUCT_COPY_FILES += \
     device/htc/holiday/configs/vold.fstab:system/etc/vold.fstab \
-    device/htc/pyramid/configs/99kernel:system/etc/init.d/99kernel
+    device/htc/holiday/configs/99kernel:system/etc/init.d/99kernel
 
 # Sound DSP
 PRODUCT_COPY_FILES += \
