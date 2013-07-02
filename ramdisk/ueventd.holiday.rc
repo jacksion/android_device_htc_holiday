@@ -196,5 +196,8 @@
 # wifi
 /dev/rfkill             0660    root        wifi
 
+# simlock
+/dev/simlock            0660    radio       radio
+
 # permissions for sensors
 /dev/msm_dsps             0660  system       system
