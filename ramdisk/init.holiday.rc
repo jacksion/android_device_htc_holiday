@@ -247,6 +247,11 @@ on post-fs-data
 
 # Services start here
 
+# Force loading of modem and Q6 images
+service load-modem /system/bin/load-modem.sh
+    class main
+    oneshot
+
 # for USB internet sharing
 # service udhcpd /system/bin/udhcpd
 #     disabled
