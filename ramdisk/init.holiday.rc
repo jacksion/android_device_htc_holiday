@@ -98,19 +98,19 @@ on post-fs-data
     mkdir /data/qcks 0770 system system
     exec /system/bin/logwrapper /system/bin/htc_ext4_fsck
 
-    # wifi
-    mkdir /data/misc 1771 system misc
-    mkdir /data/misc/wifi 0770 wifi wifi
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
-    chown dhcp dhcp /data/misc/dhcp
-
     mkdir /data/radio 0770 radio radio
     chown radio system /sys/module/smd_rpcrouter/parameters/debug_mask
     chown radio system /sys/module/rpcrouter_sdio_xprt/parameters/debug_mask
 
     # audio
     mkdir /data/audio 0775 media audio
+
+    # wifi
+    mkdir /data/misc 1771 system misc
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
 
     mkdir /data/d 0777 system system
     mount debugfs /data/d /data/d
