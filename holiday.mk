@@ -16,15 +16,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 
 ### msm8660-common overrides ###
-# override duplicate configs from common repo
 
-# Media configuration
+# Custom Media configuration
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/configs/media_codecs.xml:system/etc/media_codecs.xml \
     device/htc/holiday/configs/media_profiles.xml:system/etc/media_profiles.xml
 
 ### msm8660-common overrides END ###
-
 
 # Inherit common msm8660 configs
 $(call inherit-product, device/htc/msm8660-common/msm8660.mk)
@@ -42,13 +39,15 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     gps.holiday
 
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+   e2fsck
+
 # Bluetooth
 $(call inherit-product, device/htc/msm8660-common/bcm_hcd.mk)
 
 # Wifi
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
-PRODUCT_PACKAGES += \
-    hostapd.conf
 
 # HTC BT audio config
 PRODUCT_COPY_FILES += device/htc/holiday/dsp/AudioBTID.csv:system/etc/AudioBTID.csv
@@ -162,6 +161,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.scrollingcache=3 \
     dalvik.vm.lockprof.threshold=500 \
     dalvik.vm.dexopt-flags=m=y
+
+# We have enough space to hold precise GC data
+PRODUCT_TAGS += dalvik.gc.type-precise
 
 # call the proprietary setup
 $(call inherit-product-if-exists, vendor/htc/holiday/holiday-vendor.mk)
