@@ -33,7 +33,7 @@ persist.data_netmgrd_nint=11
 # GooManger
 #
 ro.goo.developerid=Albinoman887
-ro.goo.rom=TeamHydraCM
+ro.goo.rom=TeamHydraAOKP
 
 # Holiday RIL  
 ro.ril.enable.dtm = 0	  	
