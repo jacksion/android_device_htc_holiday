@@ -1,14 +1,7 @@
 #!/bin/sh
 
-BASE=../../../vendor/htc/holiday/proprietary
-rm -rf $BASE/*
+set -e
 
-for FILE in `egrep -v '(^#|^$)' proprietary-files.txt`; do
-  DIR=`dirname $FILE`
-  if [ ! -d $BASE/$DIR ]; then
-    mkdir -p $BASE/$DIR
-  fi
-  adb pull /system/$FILE $BASE/$FILE
-done
-
-./setup-makefiles.sh
+export DEVICE=holiday
+export VENDOR=htc
+../msm8660-common/extract-files.sh $@
