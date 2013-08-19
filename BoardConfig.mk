@@ -63,6 +63,8 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_VOLD_MAX_PARTITIONS := 37
 
 # Recovery
+TARGET_RECOVERY_FSTAB = device/htc/holiday/ramdisk/fstab.holiday
+RECOVERY_FSTAB_VERSION := 2
 BOARD_SDCARD_DEVICE_PRIMARY := /dev/block/mmcblk1p1
 BOARD_SDCARD_DEVICE_SECONDARY := /dev/block/mmcblk1
 BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p2
