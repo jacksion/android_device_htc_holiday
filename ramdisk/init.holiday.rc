@@ -252,6 +252,7 @@ on post-fs-data
 
 # Force loading of modem and Q6 images
 service load-modem /system/bin/load-modem.sh
+    class main
     oneshot
 
 # for USB internet sharing
@@ -259,7 +260,18 @@ service load-modem /system/bin/load-modem.sh
 #     disabled
 #     oneshot
 
+# bugreport is triggered by the KEY_VOL-UP and KEY_VOL-DOWN keycodes
+service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
+    disabled
+    oneshot
+    keycodes 114 115
+
 service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
     class main
     disabled
     oneshot
@@ -294,6 +306,11 @@ service htcbatt /system/bin/htcbatt
     user root
 
 service iprenew_wlan0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
