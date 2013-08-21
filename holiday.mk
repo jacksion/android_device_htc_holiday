@@ -21,6 +21,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 PRODUCT_COPY_FILES += \
     device/htc/holiday/configs/media_profiles.xml:system/etc/media_profiles.xml
 
+# call the proprietary setup
+$(call inherit-product-if-exists, vendor/htc/holiday/holiday-vendor.mk)
+
 ### msm8660-common overrides END ###
 
 # Inherit common msm8660 configs
@@ -163,9 +166,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # We have enough space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
-
-# call the proprietary setup
-$(call inherit-product-if-exists, vendor/htc/holiday/holiday-vendor.mk)
 
 # media profiles and capabilities spec
 $(call inherit-product, device/htc/holiday/media_a1026.mk)
