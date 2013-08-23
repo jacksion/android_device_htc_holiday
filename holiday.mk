@@ -50,9 +50,9 @@ PRODUCT_PACKAGES += \
 $(call inherit-product, device/htc/msm8660-common/bcm_hcd.mk)
 
 # Wifi
-BOARD_WLAN_DEVICE_REV := bcm4330_b2
-WIFI_BAND             := 802_11_ABG
-$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
+#BOARD_WLAN_DEVICE_REV := bcm4330_b2
+#WIFI_BAND             := 802_11_ABG
+#$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
 
 # HTC BT audio config
 PRODUCT_COPY_FILES += device/htc/holiday/dsp/AudioBTID.csv:system/etc/AudioBTID.csv
@@ -156,7 +156,10 @@ PRODUCT_COPY_FILES += \
     device/htc/holiday/firmware/fw_bcm4330_b1.bin:system/etc/firmware/fw_bcm4330_b1.bin \
     device/htc/holiday/firmware/fw_bcm4330_b2.bin:system/etc/firmware/fw_bcm4330_b2.bin \
     device/htc/holiday/firmware/fw_bcm4330_p2p_b1.bin:system/etc/firmware/fw_bcm4330_p2p_b1.bin \
-    device/htc/holiday/firmware/fw_bcm4330_p2p_b2.bin:system/etc/firmware/fw_bcm4330_p2p_b2.bin
+    device/htc/holiday/firmware/fw_bcm4330_p2p_b2.bin:system/etc/firmware/fw_bcm4330_p2p_b2.bin \
+    device/htc/holiday/firmware/fw_bcmdhd.bin:system/vendor/firmware/fw_bcmdhd.bin \
+    device/htc/holiday/firmware/fw_bcmdhd_apsta.bin:system/vendor/firmware/fw_bcmdhd_apsta.bin \
+    device/htc/holiday/firmware/fw_bcmdhd_p2p.bin:system/vendor/firmware/fw_bcmdhd_p2p.bin
 
 # Extra properties
 PRODUCT_PROPERTY_OVERRIDES += \
