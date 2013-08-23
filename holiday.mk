@@ -50,6 +50,8 @@ PRODUCT_PACKAGES += \
 $(call inherit-product, device/htc/msm8660-common/bcm_hcd.mk)
 
 # Wifi
+BOARD_WLAN_DEVICE_REV := bcm4330_b2
+WIFI_BAND             := 802_11_ABG
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
 
 # HTC BT audio config
