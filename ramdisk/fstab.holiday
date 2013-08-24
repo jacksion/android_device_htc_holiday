@@ -6,9 +6,9 @@
 # Currently we dont have e2fsck compiled. So fs check would failed.
 
 #<src>                                       <mnt_point>                 <type>      <mnt_flags and options>                      <fs_mgr_flags>
-/dev/block/platform/msm_sdcc.1/by-num/p17     /vendor/firmware/misc       vfat        ro,shortname=lower                           wait
-/dev/block/platform/msm_sdcc.1/by-num/p21     /vendor/firmware/adsp       vfat        ro,shortname=lower                           wait
-/dev/block/platform/msm_sdcc.1/by-num/p18     /vendor/firmware/misc_mdm   vfat        ro,shortname=lower                           wait
+/dev/block/mmcblk0p17     /vendor/firmware/misc       vfat        ro,shortname=lower                           wait
+/dev/block/mmcblk0p21     /vendor/firmware/adsp       vfat        ro,shortname=lower                           wait
+/dev/block/mmcblk0p18     /vendor/firmware/misc_mdm   vfat        ro,shortname=lower                           wait
 
 /dev/block/mmcblk0p22      /boot                       emmc         defaults                                                defaults
 /dev/block/mmcblk0p23      /recovery                   emmc         defaults                                                defaults
