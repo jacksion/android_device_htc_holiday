@@ -12,15 +12,15 @@ rild.libargs=-d /dev/smd0
 DEVICE_PROVISIONED=1
 ro.telephony.ril_class=HTCQualcommRIL
 ro.baseband.arch=msm
-persist.rild.nitz_plmn=
-persist.rild.nitz_long_ons_0=
-persist.rild.nitz_long_ons_1=
-persist.rild.nitz_long_ons_2=
-persist.rild.nitz_long_ons_3=
-persist.rild.nitz_short_ons_0=
-persist.rild.nitz_short_ons_1=
-persist.rild.nitz_short_ons_2=
-persist.rild.nitz_short_ons_3=
+persist.rild.nitz_plmn=""
+persist.rild.nitz_long_ons_0=""
+persist.rild.nitz_long_ons_1=""
+persist.rild.nitz_long_ons_2=""
+persist.rild.nitz_long_ons_3=""
+persist.rild.nitz_short_ons_0=""
+persist.rild.nitz_short_ons_1=""
+persist.rild.nitz_short_ons_2=""
+persist.rild.nitz_short_ons_3=""
 persist.rild.ril.ltedr=0
 persist.rild.ril.ltedrtable=max_retries=infinite,10000
 
@@ -65,7 +65,7 @@ ro.ril.enable.amr.wideband=0
 # system props for telephony modules
 ro.config.lte=true
 # device supports simultaneous 1x voice + LTE
-# ro.config.svlte1x=true
+ro.config.svdo=true
 telephony.lteOnGsmDevice=1
 
 # audio
