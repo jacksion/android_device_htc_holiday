@@ -206,7 +206,7 @@ on post-fs-data
     chown system system /dev/mpuirq
     chown system system /dev/timerirq
 
-    #symlink /mnt/sdcard/ext_sd /sdcard2
+    symlink /mnt/sdcard/ext_sd /sdcard2
 
 # set diag permissions
     chown radio radio /dev/diag
