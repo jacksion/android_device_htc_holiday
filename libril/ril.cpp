@@ -1639,10 +1639,15 @@ static int responseDataCallListV4(Parcel &p, void *response, size_t responselen)
 
 static int responseDataCallList(Parcel &p, void *response, size_t responselen)
 {
-    // Write version
-    p.writeInt32(s_callbacks.version);
+    /* Lie about our RIL version */
+    int fake_version = 4;
+    ALOGI("responseDataCallList: lying about s_callbacks.version from %d to %d\n",
+            s_callbacks.version, fake_version);
 
-    if (s_callbacks.version < 5) {
+    // Write version
+    p.writeInt32(fake_version);
+
+    if (fake_version < 5) {
         return responseDataCallListV4(p, response, responselen);
     } else {
         if (response == NULL && responselen != 0) {
@@ -1674,7 +1679,7 @@ static int responseDataCallList(Parcel &p, void *response, size_t responselen)
             writeStringToParcel(p, p_cur[i].addresses);
             writeStringToParcel(p, p_cur[i].dnses);
             writeStringToParcel(p, p_cur[i].gateways);
-            appendPrintBuf("%s[status=%d,retry=%d,cid=%d,%s,%s,%s,%s,%s,%s],", printBuf,
+            appendPrintBuf("%s[status=%d,retry=%d,cid=%d,%s,%d,%s,%s,%s],", printBuf,
                 p_cur[i].status,
                 p_cur[i].suggestedRetryTime,
                 p_cur[i].cid,
@@ -1694,8 +1699,13 @@ static int responseDataCallList(Parcel &p, void *response, size_t responselen)
 
 static int responseSetupDataCall(Parcel &p, void *response, size_t responselen)
 {
-    if (s_callbacks.version < 5) {
-        return responseStringsWithVersion(s_callbacks.version, p, response, responselen);
+    /* Lie about our RIL version */
+    int fake_version = 4;
+    ALOGI("responseDataCall: lying about s_callbacks.version from %d to %d\n",
+            s_callbacks.version, fake_version);
+
+    if (fake_version < 5) {
+        return responseStringsWithVersion(fake_version, p, response, responselen);
     } else {
         return responseDataCallList(p, response, responselen);
     }
@@ -2053,13 +2063,21 @@ static int responseRilSignalStrength(Parcel &p,
         RIL_SignalStrength_HTC *p_cur = ((RIL_SignalStrength_HTC *) response);
 
         p.writeInt32(p_cur->GW_SignalStrength.signalStrength);
-        p.writeInt32(p_cur->GW_SignalStrength.bitErrorRate);
+        /* For some reason bitErrorRate is stuck at 255 */
+        p.writeInt32(0);
         p.writeInt32(p_cur->CDMA_SignalStrength.dbm);
         p.writeInt32(p_cur->CDMA_SignalStrength.ecio);
         p.writeInt32(p_cur->EVDO_SignalStrength.dbm);
         p.writeInt32(p_cur->EVDO_SignalStrength.ecio);
         p.writeInt32(p_cur->EVDO_SignalStrength.signalNoiseRatio);
-        p.writeInt32(p_cur->LTE_SignalStrength.signalStrength);
+        p.writeInt32(p_cur->ATT_SignalStrength.dbm);
+        p.writeInt32(p_cur->ATT_SignalStrength.ecno);
+        /* LTE Signal strength of 99 means LTE disabled */
+        if (p_cur->LTE_SignalStrength.signalStrength == 99) {
+            p.writeInt32(-1);
+        } else {
+            p.writeInt32(p_cur->LTE_SignalStrength.signalStrength);
+        }
         p.writeInt32(p_cur->LTE_SignalStrength.rsrp);
         p.writeInt32(p_cur->LTE_SignalStrength.rsrq);
         p.writeInt32(p_cur->LTE_SignalStrength.rssnr);
