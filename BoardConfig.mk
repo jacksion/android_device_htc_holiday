@@ -40,8 +40,6 @@ TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-arm-cortex-a8
 TARGET_KERNEL_CUSTOM_TOOLCHAIN_SUFFIX := arm-cortex_a8-linux-gnueabi
 
 # Use libril in the device tree
-BOARD_USE_NEW_LIBRIL_HTC := true
-BOARD_USES_LEGACY_RIL := true
 BOARD_PROVIDES_LIBRIL := true
 
 # GPS
