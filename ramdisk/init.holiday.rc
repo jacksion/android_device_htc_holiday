@@ -197,6 +197,10 @@ on post-fs-data
     chown system system /sys/class/optical_sensors/proximity/ps_led
     chown system system /sys/class/optical_sensors/proximity/ps_test_mode
 
+    # Vibrator
+    chown system system sys/devices/platform/msm_ssbi.0/pm8058-core/pm8xxx-vib/amp
+    chmod 666 sys/devices/platform/msm_ssbi.0/pm8058-core/pm8xxx-vib/amp
+
     # Set SUID bit for iproute2 ip tool
     chmod 4755 /system/bin/ip
 
