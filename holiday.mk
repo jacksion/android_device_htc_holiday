@@ -14,15 +14,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-
-### msm8660-common overrides ###
-
-# Custom Media configuration
-PRODUCT_COPY_FILES += \
-    device/htc/holiday/configs/media_profiles.xml:system/etc/media_profiles.xml
-
-### msm8660-common overrides END ###
-
 # Inherit common msm8660 configs
 $(call inherit-product, device/htc/msm8660-common/msm8660.mk)
 
