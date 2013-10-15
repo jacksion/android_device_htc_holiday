@@ -109,5 +109,9 @@ ro.phone_fat = 1
 persist.sys.usb.config=mass_storage,adb
 ro.vold.umsdirtyratio=40
 
+# Disable-kernel-error-report
+ro.kernel.android.checkjni=0
+ro.kernel.checkjni=0
+
 # Make rmt_storage start at init
 ro.emmc = 1
