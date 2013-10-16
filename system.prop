@@ -82,7 +82,7 @@ htc.audio.hac.enable=1
 
 # wifi
 wifi.interface=wlan0
-wifi.supplicant_scan_interval=60
+wifi.supplicant_scan_interval=120
 
 #Modify MTU from 1500 to 1472 on 3G network
 ro.ril.set.mtu1472 = 1
