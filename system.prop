@@ -65,7 +65,7 @@ ro.telephony.default_network=9
 # system props for telephony modules
 ro.config.lte=true
 # device supports simultaneous 1x voice + LTE
-ro.config.svdo=true
+#ro.config.svdo=true
 telephony.lteOnGsmDevice=1
 
 # audio
@@ -84,13 +84,13 @@ wifi.interface=wlan0
 wifi.supplicant_scan_interval=120
 
 #Modify MTU from 1500 to 1472 on 3G network
-ro.ril.set.mtu1472 = 1
+#ro.ril.set.mtu1472 = 1
 
 # For the default value of agps
-ro.ril.def.agps.mode = 2
+#ro.ril.def.agps.mode = 2
 
 # System prop for switching gps driver to qmi
-persist.gps.qmienabled=true
+#persist.gps.qmienabled=true
 
 # System property for cabl
 ro.qualcomm.cabl=0
