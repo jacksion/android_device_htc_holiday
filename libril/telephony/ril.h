@@ -694,6 +694,11 @@ typedef struct {
 } RIL_LTE_SignalStrength;
 
 typedef struct {
+    int dbm;
+    int ecno;
+} RIL_ATT_SignalStrength;
+
+typedef struct {
     int signalStrength;  /* Valid values are (0-31, 99) as defined in TS 27.007 8.5 */
     int rsrp;            /* The current Reference Signal Receive Power in dBm multipled by -1.
                           * Range: 44 to 140 dBm
