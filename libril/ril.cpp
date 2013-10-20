@@ -2040,6 +2040,8 @@ static int responseRilSignalStrength(Parcel &p,
 
         p.writeInt32(p_cur->GW_SignalStrength.signalStrength);
         p.writeInt32(p_cur->GW_SignalStrength.bitErrorRate);
+        /* For some reason bitErrorRate is stuck at 255 */
+        p.writeInt32(0);
         p.writeInt32(p_cur->CDMA_SignalStrength.dbm);
         p.writeInt32(p_cur->CDMA_SignalStrength.ecio);
         p.writeInt32(p_cur->EVDO_SignalStrength.dbm);
