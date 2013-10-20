@@ -2040,6 +2040,8 @@ static int responseRilSignalStrength(Parcel &p,
 
         p.writeInt32(p_cur->GW_SignalStrength.signalStrength);
         p.writeInt32(p_cur->GW_SignalStrength.bitErrorRate);
+        /* For some reason bitErrorRate is stuck at 255 */
+        p.writeInt32(0);
         p.writeInt32(p_cur->CDMA_SignalStrength.dbm);
         p.writeInt32(p_cur->CDMA_SignalStrength.ecio);
         p.writeInt32(p_cur->EVDO_SignalStrength.dbm);
@@ -2090,7 +2092,6 @@ static int responseRilSignalStrength(Parcel &p,
                 CDMA_SS.dbm=%d,CDMA_SSecio=%d,\
                 EVDO_SS.dbm=%d,EVDO_SS.ecio=%d,\
                 EVDO_SS.signalNoiseRatio=%d,\
-                ATT_SS.dbm=%d,ATT_SS.ecno=%d,\
                 LTE_SS.signalStrength=%d,LTE_SS.rsrp=%d,LTE_SS.rsrq=%d,\
                 LTE_SS.rssnr=%d,LTE_SS.cqi=%d]",
                 printBuf,
@@ -2101,8 +2102,6 @@ static int responseRilSignalStrength(Parcel &p,
                 p_cur->EVDO_SignalStrength.dbm,
                 p_cur->EVDO_SignalStrength.ecio,
                 p_cur->EVDO_SignalStrength.signalNoiseRatio,
-                p_cur->ATT_SignalStrength.dbm,
-                p_cur->ATT_SignalStrength.ecno,
                 p_cur->LTE_SignalStrength.signalStrength,
                 p_cur->LTE_SignalStrength.rsrp,
                 p_cur->LTE_SignalStrength.rsrq,
