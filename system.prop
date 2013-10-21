@@ -99,12 +99,6 @@ ro.phone_fat = 1
 persist.sys.usb.config=mass_storage,mtp,adb
 ro.vold.umsdirtyratio=40
 
-#
-# Power Saving/Sleep
-#
-ro.ril.disable.power.collapse=1
-pm.sleep_mode=1
-
 # Disable-kernel-error-report
 ro.kernel.android.checkjni=0
 ro.kernel.checkjni=0
