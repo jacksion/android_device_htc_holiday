@@ -41,10 +41,10 @@ ro.goo.rom=TeamHydraCM
 
 # Holiday RIL  
 ro.ril.enable.dtm = 0	  	
-#ro.ril.gprsclass = 12	  	
-#ro.ril.hsdpa.category = 14	  	
-#ro.ril.hsupa.category = 6	  	
-#ro.ril.hsxpa = 4	  	  	
+ro.ril.gprsclass = 12	  	
+ro.ril.hsdpa.category = 14	  	
+ro.ril.hsupa.category = 6	  	
+ro.ril.hsxpa = 4	  	  	
 ro.ril.enable.r8fd=1	  	
 #ro.ril.radio.svn=5  	
 ro.ril.fast.dormancy.rule=1  	
