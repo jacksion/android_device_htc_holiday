@@ -18,7 +18,6 @@
 #define ANDROID_RIL_H 1
 
 #include <stdlib.h>
-#include <stdint.h>
 #ifndef FEATURE_UNIT_TEST
 #include <sys/time.h>
 #endif /* !FEATURE_UNIT_TEST */
@@ -27,7 +26,7 @@
 extern "C" {
 #endif
 
-#define RIL_VERSION 8     /* Current version */
+#define RIL_VERSION 7     /* Current version */
 #define RIL_VERSION_MIN 6 /* Minimum RIL_VERSION supported */
 
 #define CDMA_ALPHA_INFO_BUFFER_LENGTH 64
@@ -103,8 +102,7 @@ typedef enum {
     RADIO_TECH_EHRPD = 13,
     RADIO_TECH_LTE = 14,
     RADIO_TECH_HSPAP = 15, // HSPA+
-    RADIO_TECH_GSM = 16, // Only supports voice
-    RADIO_TECH_DCHSPAP = 30
+    RADIO_TECH_GSM = 16 // Only supports voice
 } RIL_RadioTechnology;
 
 // Do we want to split Data from Voice and the use
@@ -196,6 +194,8 @@ typedef struct {
                                    For example, "IP", "IPV6", "IPV4V6", or "PPP". */
     char *          apn;        /* ignored */
     char *          address;    /* An address, e.g., "192.0.1.3" or "2001:db8::1". */
+    int             inactive_reason; /* HTC added filler field */
+    int             unknown_field; /* HTC added filler field */
 } RIL_Data_Call_Response_v4;
 
 /*
@@ -211,7 +211,7 @@ typedef struct {
                                            The unit is miliseconds.
                                            The value < 0 means no value is suggested.
                                            The value 0 means retry should be done ASAP.
-                                           The value of INT_MAX(0x7fffffff) means no retry. */
+                                           The value of MAX_INT(0x7fffffff) means no retry. */
 #endif
     int             cid;        /* Context ID, uniquely identifies this call */
     int             active;     /* 0=inactive, 1=active/physical link down, 2=active/physical link up */
@@ -640,10 +640,6 @@ typedef struct {
     int bitErrorRate;    /* bit error rate (0-7, 99) as defined in TS 27.007 8.5 */
 } RIL_GW_SignalStrength;
 
-typedef struct {
-    int signalStrength;  /* Valid values are (0-31, 99) as defined in TS 27.007 8.5 */
-    int bitErrorRate;    /* bit error rate (0-7, 99) as defined in TS 27.007 8.5 */
-} RIL_SignalStrengthWcdma;
 
 typedef struct {
     int dbm;  /* Valid values are positive integers.  This value is the actual RSSI value
@@ -715,103 +711,6 @@ typedef struct {
     RIL_ATT_SignalStrength  ATT_SignalStrength;
     RIL_LTE_SignalStrength  LTE_SignalStrength;
 } RIL_SignalStrength_HTC;
-
-/** RIL_CellIdentityGsm */
-typedef struct {
-    int mcc;    /* 3-digit Mobile Country Code, 0..999, INT_MAX if unknown */
-    int mnc;    /* 2 or 3-digit Mobile Network Code, 0..999, INT_MAX if unknown */
-    int lac;    /* 16-bit Location Area Code, 0..65535, INT_MAX if unknown  */
-    int cid;    /* 16-bit GSM Cell Identity described in TS 27.007, 0..65535, INT_MAX if unknown  */
-} RIL_CellIdentityGsm;
-
-/** RIL_CellIdentityWcdma */
-typedef struct {
-    int mcc;    /* 3-digit Mobile Country Code, 0..999, INT_MAX if unknown  */
-    int mnc;    /* 2 or 3-digit Mobile Network Code, 0..999, INT_MAX if unknown  */
-    int lac;    /* 16-bit Location Area Code, 0..65535, INT_MAX if unknown  */
-    int cid;    /* 28-bit UMTS Cell Identity described in TS 25.331, 0..268435455, INT_MAX if unknown  */
-    int psc;    /* 9-bit UMTS Primary Scrambling Code described in TS 25.331, 0..511, INT_MAX if unknown */
-} RIL_CellIdentityWcdma;
-
-/** RIL_CellIdentityCdma */
-typedef struct {
-    int networkId;      /* Network Id 0..65535, INT_MAX if unknown */
-    int systemId;       /* CDMA System Id 0..32767, INT_MAX if unknown  */
-    int basestationId;  /* Base Station Id 0..65535, INT_MAX if unknown  */
-    int longitude;      /* Longitude is a decimal number as specified in 3GPP2 C.S0005-A v6.0.
-                         * It is represented in units of 0.25 seconds and ranges from -2592000
-                         * to 2592000, both values inclusive (corresponding to a range of -180
-                         * to +180 degrees). INT_MAX if unknown */
-
-    int latitude;       /* Latitude is a decimal number as specified in 3GPP2 C.S0005-A v6.0.
-                         * It is represented in units of 0.25 seconds and ranges from -1296000
-                         * to 1296000, both values inclusive (corresponding to a range of -90
-                         * to +90 degrees). INT_MAX if unknown */
-} RIL_CellIdentityCdma;
-
-/** RIL_CellIdentityLte */
-typedef struct {
-    int mcc;    /* 3-digit Mobile Country Code, 0..999, INT_MAX if unknown  */
-    int mnc;    /* 2 or 3-digit Mobile Network Code, 0..999, INT_MAX if unknown  */
-    int ci;     /* 28-bit Cell Identity described in TS ???, INT_MAX if unknown */
-    int pci;    /* physical cell id 0..503, INT_MAX if unknown  */
-    int tac;    /* 16-bit tracking area code, INT_MAX if unknown  */
-} RIL_CellIdentityLte;
-
-/** RIL_CellInfoGsm */
-typedef struct {
-  RIL_CellIdentityGsm   cellIdentityGsm;
-  RIL_GW_SignalStrength signalStrengthGsm;
-} RIL_CellInfoGsm;
-
-/** RIL_CellInfoWcdma */
-typedef struct {
-  RIL_CellIdentityWcdma cellIdentityWcdma;
-  RIL_SignalStrengthWcdma signalStrengthWcdma;
-} RIL_CellInfoWcdma;
-
-/** RIL_CellInfoCdma */
-typedef struct {
-  RIL_CellIdentityCdma      cellIdentityCdma;
-  RIL_CDMA_SignalStrength   signalStrengthCdma;
-  RIL_EVDO_SignalStrength   signalStrengthEvdo;
-} RIL_CellInfoCdma;
-
-/** RIL_CellInfoLte */
-typedef struct {
-  RIL_CellIdentityLte        cellIdentityLte;
-  RIL_LTE_SignalStrength_v8  signalStrengthLte;
-} RIL_CellInfoLte;
-
-// Must be the same as CellInfo.TYPE_XXX
-typedef enum {
-  RIL_CELL_INFO_TYPE_GSM    = 1,
-  RIL_CELL_INFO_TYPE_CDMA   = 2,
-  RIL_CELL_INFO_TYPE_LTE    = 3,
-  RIL_CELL_INFO_TYPE_WCDMA  = 4,
-} RIL_CellInfoType;
-
-// Must be the same as CellInfo.TIMESTAMP_TYPE_XXX
-typedef enum {
-    RIL_TIMESTAMP_TYPE_UNKNOWN = 0,
-    RIL_TIMESTAMP_TYPE_ANTENNA = 1,
-    RIL_TIMESTAMP_TYPE_MODEM = 2,
-    RIL_TIMESTAMP_TYPE_OEM_RIL = 3,
-    RIL_TIMESTAMP_TYPE_JAVA_RIL = 4,
-} RIL_TimeStampType;
-
-typedef struct {
-  RIL_CellInfoType  cellInfoType;   /* cell type for selecting from union CellInfo */
-  int               registered;     /* !0 if this cell is registered 0 if not registered */
-  RIL_TimeStampType timeStampType;  /* type of time stamp represented by timeStamp */
-  uint64_t          timeStamp;      /* Time in nanos as returned by ril_nano_time */
-  union {
-    RIL_CellInfoGsm     gsm;
-    RIL_CellInfoCdma    cdma;
-    RIL_CellInfoLte     lte;
-    RIL_CellInfoWcdma   wcdma;
-  } CellInfo;
-} RIL_CellInfo;
 
 /* Names of the CDMA info records (C.S0005 section 3.7.5) */
 typedef enum {
@@ -1481,15 +1380,6 @@ typedef struct {
  *      40 == No PDP context activated
  * ((const char **)response)[5] The maximum number of simultaneous Data Calls that can be
  *                              established using RIL_REQUEST_SETUP_DATA_CALL.
- *
- * The values at offsets 6..10 are optional LTE location information in decimal.
- * If a value is unknown that value may be NULL. If all values are NULL,
- * none need to be present.
- *  ((const char **)response)[6] is TAC, a 16-bit Tracking Area Code.
- *  ((const char **)response)[7] is CID, a 0-503 Physical Cell Identifier.
- *  ((const char **)response)[8] is ECI, a 28-bit E-UTRAN Cell Identifier.
- *  ((const char **)response)[9] is CSGID, a 27-bit Closed Subscriber Group Identity.
- *  ((const char **)response)[10] is TADV, a 6-bit timing advance value.
  *
  * LAC and CID are in hexadecimal format.
  * valid LAC are 0x0000 - 0xffff
@@ -3431,39 +3321,6 @@ typedef struct {
  */
 #define RIL_REQUEST_VOICE_RADIO_TECH 108
 
-/**
- * RIL_REQUEST_GET_CELL_INFO_LIST
- *
- * Request all of the current cell information known to the radio. The radio
- * must a list of all current cells, including the neighboring cells. If for a particular
- * cell information isn't known then the appropriate unknown value will be returned.
- * This does not cause or change the rate of RIL_UNSOL_CELL_INFO_LIST.
- *
- * "data" is NULL
- *
- * "response" is an array of  RIL_CellInfo.
- */
-#define RIL_REQUEST_GET_CELL_INFO_LIST 109
-
-/**
- * RIL_REQUEST_SET_UNSOL_CELL_INFO_LIST_RATE
- *
- * Sets the minimum time between when RIL_UNSOL_CELL_INFO_LIST should be invoked.
- * A value of 0, means invoke RIL_UNSOL_CELL_INFO_LIST when any of the reported
- * information changes. Setting the value to INT_MAX(0x7fffffff) means never issue
- * a RIL_UNSOL_CELL_INFO_LIST.
- *
- * "data" is int *
- * ((int *)data)[0] is minimum time in milliseconds
- *
- * "response" is NULL
- *
- * Valid errors:
- *  SUCCESS
- *  RADIO_NOT_AVAILABLE
- *  GENERIC_FAILURE
- */
-#define RIL_REQUEST_SET_UNSOL_CELL_INFO_LIST_RATE 110
 
 /***********************************************************************/
 
@@ -3943,30 +3800,6 @@ typedef struct {
  */
 #define RIL_UNSOL_VOICE_RADIO_TECH_CHANGED 1035
 
-/**
- * RIL_UNSOL_CELL_INFO_LIST
- *
- * Same information as returned by RIL_REQUEST_GET_CELL_INFO_LIST, but returned
- * at the rate no greater than specified by RIL_REQUEST_SET_UNSOL_CELL_INFO_RATE.
- *
- * "data" is NULL
- *
- * "response" is an array of RIL_CellInfo.
- */
-#define RIL_UNSOL_CELL_INFO_LIST 1036
-
-/**
- * Custom responses for HTCQualcommRIL.java
- */
-#define RIL_UNSOL_ENTER_LPM 1523
-#define RIL_UNSOL_CDMA_3G_INDICATOR 3009
-#define RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR 3012
-#define RIL_UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL 3020
-#define RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE_M7 4802
-#define RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE 6002
-#define RIL_UNSOL_RESPONSE_VOICE_RADIO_TECH_CHANGED 21004
-#define RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED 21005
-#define RIL_UNSOL_RESPONSE_DATA_NETWORK_STATE_CHANGED 21007
 
 /***********************************************************************/
 
