@@ -694,7 +694,7 @@ typedef struct {
                           * Range: 0 to 15.
                           * INT_MAX : 0x7FFFFFFF denotes invalid value.
                           * Reference: 3GPP TS 36.101 9.2, 9.3, A.4 */
-} RIL_LTE_SignalStrength;
+} RIL_LTE_SignalStrength_v8;
 
 /* Deprecated, use RIL_SignalStrength_v6 */
 typedef struct {
