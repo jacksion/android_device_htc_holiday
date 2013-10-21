@@ -40,29 +40,29 @@ ro.goo.developerid=Albinoman887
 ro.goo.rom=TeamHydraCM
 
 # Holiday RIL  
-#ro.ril.enable.dtm = 0	  	
-#ro.ril.gprsclass = 12	  	
-#ro.ril.hsdpa.category = 14	  	
-#ro.ril.hsupa.category = 6	  	
-#ro.ril.hsxpa = 4	  	  	
-#ro.ril.enable.r8fd=1	  	
-#ro.ril.radio.svn=5  	
-#ro.ril.fast.dormancy.rule=0  	
-#ro.ril.disable.mcc.filter=1  	
+ro.ril.enable.dtm = 0	  	
+ro.ril.gprsclass = 12	  	
+ro.ril.hsdpa.category = 14	  	
+ro.ril.hsupa.category = 6	  	
+ro.ril.hsxpa = 4	  	  	
+ro.ril.enable.r8fd=1	  	
+ro.ril.radio.svn=5  	
+ro.ril.fast.dormancy.rule=0  	
+ro.ril.disable.mcc.filter=1  	
 ro.ril.disable.fd.plmn.prefix=23402,23410,23411,23420
-#ro.ril.ciq=1
-#persist.pdn.profile=pta
-#ro.ril.disable.cpc=1
-#ro.ril.enable.sdr=1
-#ro.ril.enable.gea3=1
-#ro.ril.enable.ucsq=2
-#ro.ril.set.mtusize=1410
-#ro.ril.multirab.throttling=1
-#htc.audio.global.state=0
-#htc.audio.q6.topology=0
-#ro.ril.enable.prl.recognition = 1
-#ro.ril.att.feature = 1
-#ro.ril.enable.amr.wideband=1
+ro.ril.ciq=1
+persist.pdn.profile=pta
+ro.ril.disable.cpc=1
+ro.ril.enable.sdr=1
+ro.ril.enable.gea3=1
+ro.ril.enable.ucsq=2
+ro.ril.set.mtusize=1410
+ro.ril.multirab.throttling=1
+htc.audio.global.state=0
+htc.audio.q6.topology=0
+ro.ril.enable.prl.recognition = 1
+ro.ril.att.feature = 1
+ro.ril.enable.amr.wideband=1
 
 # system props for telephony modules
 ro.config.lte=true
@@ -79,7 +79,7 @@ wifi.interface=wlan0
 wifi.supplicant_scan_interval=120
 
 #Modify MTU from 1500 to 1472 on 3G network
-#ro.ril.set.mtu1472 = 1
+ro.ril.set.mtu1472 = 1
 
 # For the default value of agps
 #ro.ril.def.agps.mode = 2
