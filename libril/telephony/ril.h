@@ -658,6 +658,10 @@ typedef struct {
                */
 } RIL_CDMA_SignalStrength;
 
+typedef struct {
+    int dbm;
+    int ecno;
+} RIL_ATT_SignalStrength;
 
 typedef struct {
     int dbm;  /* Valid values are positive integers.  This value is the actual RSSI value
@@ -730,6 +734,7 @@ typedef struct {
     RIL_GW_SignalStrength   GW_SignalStrength;
     RIL_CDMA_SignalStrength CDMA_SignalStrength;
     RIL_EVDO_SignalStrength EVDO_SignalStrength;
+    RIL_ATT_SignalStrength  ATT_SignalStrength;
     RIL_LTE_SignalStrength  LTE_SignalStrength;
 } RIL_SignalStrength_v6;
 
@@ -737,6 +742,7 @@ typedef struct {
     RIL_GW_SignalStrength       GW_SignalStrength;
     RIL_CDMA_SignalStrength     CDMA_SignalStrength;
     RIL_EVDO_SignalStrength     EVDO_SignalStrength;
+    RIL_ATT_SignalStrength      ATT_SignalStrength;
     RIL_LTE_SignalStrength_v8   LTE_SignalStrength;
 } RIL_SignalStrength_v8;
 
