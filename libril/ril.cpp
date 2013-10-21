@@ -2069,7 +2069,12 @@ static int responseRilSignalStrength(Parcel &p,
         p.writeInt32(p_cur->EVDO_SignalStrength.dbm);
         p.writeInt32(p_cur->EVDO_SignalStrength.ecio);
         p.writeInt32(p_cur->EVDO_SignalStrength.signalNoiseRatio);
-        p.writeInt32(p_cur->LTE_SignalStrength.signalStrength);
+        /* LTE Signal strength of 99 means LTE disabled */
+        if (p_cur->LTE_SignalStrength.signalStrength == 99) {
+            p.writeInt32(-1);
+        } else {
+            p.writeInt32(p_cur->LTE_SignalStrength.signalStrength);
+        }
         p.writeInt32(p_cur->LTE_SignalStrength.rsrp);
         p.writeInt32(p_cur->LTE_SignalStrength.rsrq);
         p.writeInt32(p_cur->LTE_SignalStrength.rssnr);
