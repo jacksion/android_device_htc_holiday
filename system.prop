@@ -67,7 +67,7 @@ ro.ril.enable.amr.wideband=1
 # system props for telephony modules
 ro.config.lte=true
 # device supports simultaneous 1x voice + LTE
-ro.config.svdo=true
+# ro.config.svdo=true
 telephony.lteOnGsmDevice=1
 
 # audio
