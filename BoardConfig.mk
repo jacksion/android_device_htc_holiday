@@ -45,9 +45,6 @@ BOARD_PROVIDES_LIBRIL := true
 # GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := holiday
 
-# Audio
-BOARD_HAVE_AUDIENCE_ES325_2MIC := true
-
 # USB
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun0/file
 
