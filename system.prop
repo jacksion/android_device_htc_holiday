@@ -16,17 +16,17 @@ ro.telephony.ril_class=HTCQualcommRIL
 ro.telephony.ril.v3=datacallapn,signalstrength,skipdatareg,skipbrokendatacall
 ro.vendor.extension_library=/system/lib/libqc-opt.so
 ro.baseband.arch=msm
-persist.rild.nitz_plmn=
-persist.rild.nitz_long_ons_0=
-persist.rild.nitz_long_ons_1=
-persist.rild.nitz_long_ons_2=
-persist.rild.nitz_long_ons_3=
-persist.rild.nitz_short_ons_0=
-persist.rild.nitz_short_ons_1=
-persist.rild.nitz_short_ons_2=
-persist.rild.nitz_short_ons_3=
+persist.rild.nitz_plmn=""
+persist.rild.nitz_long_ons_0=""
+persist.rild.nitz_long_ons_1=""
+persist.rild.nitz_long_ons_2=""
+persist.rild.nitz_long_ons_3=""
+persist.rild.nitz_short_ons_0=""
+persist.rild.nitz_short_ons_1=""
+persist.rild.nitz_short_ons_2=""
+persist.rild.nitz_short_ons_3=""
 persist.rild.ril.ltedr=0
-#persist.rild.ril.ltedrtable=max_retries=infinite,10000
+persist.rild.ril.ltedrtable=max_retries=infinite,10000
 
 # system props for the data modules
 #
@@ -50,7 +50,6 @@ ro.ril.enable.r8fd=1
 ro.ril.fast.dormancy.rule=1  	
 #ro.ril.disable.mcc.filter=1  	
 ro.ril.disable.fd.plmn.prefix=23402,23410,23411,23420
-ro.telephony.default_network=9
 #ro.ril.ciq=1
 #persist.pdn.profile=pta
 #ro.ril.disable.cpc=1
