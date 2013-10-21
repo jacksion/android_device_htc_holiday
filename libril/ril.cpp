@@ -2047,45 +2047,18 @@ static int responseRilSignalStrength(Parcel &p,
         p.writeInt32(p_cur->EVDO_SignalStrength.dbm);
         p.writeInt32(p_cur->EVDO_SignalStrength.ecio);
         p.writeInt32(p_cur->EVDO_SignalStrength.signalNoiseRatio);
-        if (responselen >= sizeof (RIL_SignalStrength_v6)) {
-            /*
-             * Fixup LTE for backwards compatibility
-             */
-            if (s_callbacks.version <= 6) {
-                // signalStrength: -1 -> 99
-                if (p_cur->LTE_SignalStrength.signalStrength == -1) {
-                    p_cur->LTE_SignalStrength.signalStrength = 99;
-                }
-                // rsrp: -1 -> INT_MAX all other negative value to positive.
-                // So remap here
-                if (p_cur->LTE_SignalStrength.rsrp == -1) {
-                    p_cur->LTE_SignalStrength.rsrp = INT_MAX;
-                } else if (p_cur->LTE_SignalStrength.rsrp < -1) {
-                    p_cur->LTE_SignalStrength.rsrp = -p_cur->LTE_SignalStrength.rsrp;
-                }
-                // rsrq: -1 -> INT_MAX
-                if (p_cur->LTE_SignalStrength.rsrq == -1) {
-                    p_cur->LTE_SignalStrength.rsrq = INT_MAX;
-                }
-                // Not remapping rssnr is already using INT_MAX
-
-                // cqi: -1 -> INT_MAX
-               if (p_cur->LTE_SignalStrength.cqi == -1) {
-                    p_cur->LTE_SignalStrength.cqi = INT_MAX;
-                }
-            }
+        p.writeInt32(p_cur->ATT_SignalStrength.dbm);
+        p.writeInt32(p_cur->ATT_SignalStrength.ecno);
+        /* LTE Signal strength of 99 means LTE disabled */
+        if (p_cur->LTE_SignalStrength.signalStrength == 99) {
+            p.writeInt32(-1);
+        } else {
             p.writeInt32(p_cur->LTE_SignalStrength.signalStrength);
-            p.writeInt32(p_cur->LTE_SignalStrength.rsrp);
-            p.writeInt32(p_cur->LTE_SignalStrength.rsrq);
-            p.writeInt32(p_cur->LTE_SignalStrength.rssnr);
-            p.writeInt32(p_cur->LTE_SignalStrength.cqi);
-			} else {
-            p.writeInt32(99);
-            p.writeInt32(INT_MAX);
-            p.writeInt32(INT_MAX);
-            p.writeInt32(INT_MAX);
-            p.writeInt32(INT_MAX);
         }
+        p.writeInt32(p_cur->LTE_SignalStrength.rsrp);
+        p.writeInt32(p_cur->LTE_SignalStrength.rsrq);
+        p.writeInt32(p_cur->LTE_SignalStrength.rssnr);
+        p.writeInt32(p_cur->LTE_SignalStrength.cqi);
 
         startResponse;
         appendPrintBuf("%s[signalStrength=%d,bitErrorRate=%d,\
