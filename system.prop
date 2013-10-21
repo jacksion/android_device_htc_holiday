@@ -60,14 +60,15 @@ ro.ril.disable.fd.plmn.prefix=23402,23410,23411,23420
 #ro.ril.multirab.throttling=1
 #htc.audio.global.state=0
 #htc.audio.q6.topology=0
-#ro.ril.enable.prl.recognition = 1
-#ro.ril.att.feature = 1
-#ro.ril.enable.amr.wideband=1
+ro.ril.enable.prl.recognition = 1
+ro.ril.att.feature = 1
+ro.ril.enable.amr.wideband=1
 
 # system props for telephony modules
 ro.config.lte=true
 # device supports simultaneous 1x voice + LTE
 # ro.config.svlte1x=true
+ro.config.svdo=true
 telephony.lteOnGsmDevice=1
 
 # audio
@@ -86,7 +87,7 @@ wifi.interface=wlan0
 wifi.supplicant_scan_interval=120
 
 #Modify MTU from 1500 to 1472 on 3G network
-#ro.ril.set.mtu1472 = 1
+ro.ril.set.mtu1472 = 1
 
 # For the default value of agps
 #ro.ril.def.agps.mode = 2
