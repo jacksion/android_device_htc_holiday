@@ -104,7 +104,7 @@ on post-fs-data
     # Set indication that we have finished previous actions
     setprop vold.post_fs_done 1
 
-    #wait /dev/ttyHSL1
+    wait /dev/ttyHSL1
     mkdir /data/qcks 0770 system system
     exec /system/bin/logwrapper /system/bin/htc_ext4_fsck
 
@@ -120,6 +120,7 @@ on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chmod 0660 /data/misc/wifi/wpa_supplicant.conf
     chown dhcp dhcp /data/misc/dhcp
 
     mkdir /data/d 0777 system system
@@ -231,11 +232,35 @@ on post-fs-data
     chmod 0660 /dev/diag_arm9
     chmod 0660 /dev/btdiag
 
-# Services start here
+    # allow interfaces to get v6 address when tethering is enabled
+    write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet1/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet2/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet3/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet4/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet5/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet6/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet7/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio0/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio1/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio2/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio3/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio4/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio5/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio6/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio7/accept_ra 2
 
-# Force loading of modem and Q6 images
-service load-modem /system/bin/load-modem.sh
-    oneshot
+    setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
+    setprop net.tcp.buffersize.hsdpa   4096,174760,1572864,4096,16384,110208
+    setprop net.tcp.buffersize.umts    4096,174760,1572864,4096,16384,110208
+    setprop net.tcp.buffersize.edge    4096,174760,1572864,4096,16384,35040
+    setprop net.tcp.buffersize.gprs    4096,174760,1572864,4096,8760,11680
+    setprop net.tcp.buffersize.lte     4096,221184,3461120,4096,221184,3461120
+    setprop net.tcp.buffersize.evdo_b  4094,87380,262144,4096,16384,262144
+    setprop net.tcp.buffersize.wimax   4096,221184,524288,4096,16384,110208
+
+# Services start here
 
 # for USB internet sharing
 # service udhcpd /system/bin/udhcpd
@@ -335,8 +360,8 @@ service qmiproxy /system/bin/qmiproxy
     disabled
 
 service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p25 /dev/block/mmcblk0p26 NULL NULL /dev/block/mmcblk0p27 /dev/block/mmcblk0p28 /dev/block/mmcblkp20
-    class core
     user root
+    disabled
 
 service ril-daemon /system/bin/rild
     class main
@@ -348,7 +373,6 @@ service ril-daemon /system/bin/rild
 service wpa_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c /data/misc/wifi/wpa_supplicant.conf
     user root
     group wifi inet
-    class main
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
