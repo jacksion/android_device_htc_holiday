@@ -28,7 +28,7 @@ extern "C" {
 #endif
 
 #define RIL_VERSION 8     /* Current version */
-#define RIL_VERSION_MIN 2 /* Minimum RIL_VERSION supported */
+#define RIL_VERSION_MIN 6 /* Minimum RIL_VERSION supported */
 
 #define CDMA_ALPHA_INFO_BUFFER_LENGTH 64
 #define CDMA_NUMBER_INFO_BUFFER_LENGTH 81
@@ -731,7 +731,6 @@ typedef struct {
     RIL_GW_SignalStrength   GW_SignalStrength;
     RIL_CDMA_SignalStrength CDMA_SignalStrength;
     RIL_EVDO_SignalStrength EVDO_SignalStrength;
-    RIL_ATT_SignalStrength  ATT_SignalStrength;
     RIL_LTE_SignalStrength  LTE_SignalStrength;
 } RIL_SignalStrength_v6;
 
@@ -739,9 +738,16 @@ typedef struct {
     RIL_GW_SignalStrength       GW_SignalStrength;
     RIL_CDMA_SignalStrength     CDMA_SignalStrength;
     RIL_EVDO_SignalStrength     EVDO_SignalStrength;
-    RIL_ATT_SignalStrength      ATT_SignalStrength;
     RIL_LTE_SignalStrength_v8   LTE_SignalStrength;
 } RIL_SignalStrength_v8;
+
+typedef struct {
+    RIL_GW_SignalStrength   GW_SignalStrength;
+    RIL_CDMA_SignalStrength CDMA_SignalStrength;
+    RIL_EVDO_SignalStrength EVDO_SignalStrength;
+    RIL_ATT_SignalStrength  ATT_SignalStrength;
+    RIL_LTE_SignalStrength  LTE_SignalStrength;
+} RIL_SignalStrength_HTC;
 
 /** RIL_CellIdentityGsm */
 typedef struct {
@@ -3491,6 +3497,7 @@ typedef struct {
  *  GENERIC_FAILURE
  */
 #define RIL_REQUEST_SET_UNSOL_CELL_INFO_LIST_RATE 110
+
 /***********************************************************************/
 
 

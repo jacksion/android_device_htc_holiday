@@ -1859,6 +1859,32 @@ static void marshallSignalInfoRecord(Parcel &p,
     p.writeInt32(p_signalInfoRecord.signal);
 }
 
+static int responseCdmaERIInfo(Parcel &p,
+            void *response, size_t responselen) {
+    /*
+     * Method from RIL.java
+     * private Object responseCdmaERIInfo(Parcel p)  {
+     * CdmaERIInfo mCdmaERIInfo = new CdmaERIInfo();
+     *
+     * mCdmaERIInfo.carrier_id = p.readInt();
+     * mCdmaERIInfo.eri_id = p.readInt();
+     * mCdmaERIInfo.icon_img_id = p.readInt();
+     * mCdmaERIInfo.param1 = p.readInt();
+     * mCdmaERIInfo.param2 = p.readInt();
+     * mCdmaERIInfo.param3 = p.readInt();
+     * mCdmaERIInfo.param4 = p.readInt();
+     * mCdmaERIInfo.text = p.readString();
+     * mCdmaERIInfo.data_support = p.readInt();
+     *
+     * if (p.dataAvail() > 0)
+     *      localCdmaERIInfo.roaming_type = p.readInt();
+     *
+     * return localCdmaERIInfo;
+     * }
+     */
+     return 0;
+}
+
 static int responseCdmaInformationRecords(Parcel &p,
             void *response, size_t responselen) {
     int num;
@@ -2023,20 +2049,16 @@ static int responseRilSignalStrength(Parcel &p,
         return RIL_ERRNO_INVALID_RESPONSE;
     }
 
-    if (responselen >= sizeof (RIL_SignalStrength_v5)) {
-        RIL_SignalStrength_v6 *p_cur = ((RIL_SignalStrength_v6 *) response);
+    if (responselen >= sizeof (RIL_SignalStrength_HTC)) {
+        RIL_SignalStrength_HTC *p_cur = ((RIL_SignalStrength_HTC *) response);
 
         p.writeInt32(p_cur->GW_SignalStrength.signalStrength);
         p.writeInt32(p_cur->GW_SignalStrength.bitErrorRate);
-        /* For some reason bitErrorRate is stuck at 255 */
-        p.writeInt32(0);
         p.writeInt32(p_cur->CDMA_SignalStrength.dbm);
         p.writeInt32(p_cur->CDMA_SignalStrength.ecio);
         p.writeInt32(p_cur->EVDO_SignalStrength.dbm);
         p.writeInt32(p_cur->EVDO_SignalStrength.ecio);
         p.writeInt32(p_cur->EVDO_SignalStrength.signalNoiseRatio);
-        p.writeInt32(p_cur->ATT_SignalStrength.dbm);
-        p.writeInt32(p_cur->ATT_SignalStrength.ecno);
         p.writeInt32(p_cur->LTE_SignalStrength.signalStrength);
         p.writeInt32(p_cur->LTE_SignalStrength.rsrp);
         p.writeInt32(p_cur->LTE_SignalStrength.rsrq);
@@ -2061,6 +2083,44 @@ static int responseRilSignalStrength(Parcel &p,
                 p_cur->EVDO_SignalStrength.signalNoiseRatio,
                 p_cur->ATT_SignalStrength.dbm,
                 p_cur->ATT_SignalStrength.ecno,
+                p_cur->LTE_SignalStrength.signalStrength,
+                p_cur->LTE_SignalStrength.rsrp,
+                p_cur->LTE_SignalStrength.rsrq,
+                p_cur->LTE_SignalStrength.rssnr,
+                p_cur->LTE_SignalStrength.cqi);
+        closeResponse;
+
+    } else if (responselen >= sizeof(RIL_SignalStrength_v6)) {
+        RIL_SignalStrength_v6 *p_cur = ((RIL_SignalStrength_v6 *) response);
+
+        p.writeInt32(p_cur->GW_SignalStrength.signalStrength);
+        p.writeInt32(p_cur->GW_SignalStrength.bitErrorRate);
+        p.writeInt32(p_cur->CDMA_SignalStrength.dbm);
+        p.writeInt32(p_cur->CDMA_SignalStrength.ecio);
+        p.writeInt32(p_cur->EVDO_SignalStrength.dbm);
+        p.writeInt32(p_cur->EVDO_SignalStrength.ecio);
+        p.writeInt32(p_cur->EVDO_SignalStrength.signalNoiseRatio);
+        p.writeInt32(p_cur->LTE_SignalStrength.signalStrength);
+        p.writeInt32(p_cur->LTE_SignalStrength.rsrp);
+        p.writeInt32(p_cur->LTE_SignalStrength.rsrq);
+        p.writeInt32(p_cur->LTE_SignalStrength.rssnr);
+        p.writeInt32(p_cur->LTE_SignalStrength.cqi);
+
+        startResponse;
+        appendPrintBuf("%s[signalStrength=%d,bitErrorRate=%d,\
+                CDMA_SS.dbm=%d,CDMA_SSecio=%d,\
+                EVDO_SS.dbm=%d,EVDO_SS.ecio=%d,\
+                EVDO_SS.signalNoiseRatio=%d,\
+                LTE_SS.signalStrength=%d,LTE_SS.rsrp=%d,LTE_SS.rsrq=%d,\
+                LTE_SS.rssnr=%d,LTE_SS.cqi=%d]",
+                printBuf,
+                p_cur->GW_SignalStrength.signalStrength,
+                p_cur->GW_SignalStrength.bitErrorRate,
+                p_cur->CDMA_SignalStrength.dbm,
+                p_cur->CDMA_SignalStrength.ecio,
+                p_cur->EVDO_SignalStrength.dbm,
+                p_cur->EVDO_SignalStrength.ecio,
+                p_cur->EVDO_SignalStrength.signalNoiseRatio,
                 p_cur->LTE_SignalStrength.signalStrength,
                 p_cur->LTE_SignalStrength.rsrp,
                 p_cur->LTE_SignalStrength.rsrq,
