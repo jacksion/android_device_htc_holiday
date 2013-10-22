@@ -1639,15 +1639,10 @@ static int responseDataCallListV4(Parcel &p, void *response, size_t responselen)
 
 static int responseDataCallList(Parcel &p, void *response, size_t responselen)
 {
-    /* Lie about our RIL version */
-    int fake_version = 4;
-    ALOGI("responseDataCallList: lying about s_callbacks.version from %d to %d\n",
-            s_callbacks.version, fake_version);
-
     // Write version
-    p.writeInt32(fake_version);
+    p.writeInt32(s_callbacks.version);
 
-    if (fake_version < 5) {
+    if (s_callbacks.version < 5) {
         return responseDataCallListV4(p, response, responselen);
     } else {
         if (response == NULL && responselen != 0) {
@@ -1699,13 +1694,8 @@ static int responseDataCallList(Parcel &p, void *response, size_t responselen)
 
 static int responseSetupDataCall(Parcel &p, void *response, size_t responselen)
 {
-    /* Lie about our RIL version */
-    int fake_version = 4;
-    RLOGI("responseDataCall: lying about s_callbacks.version from %d to %d\n",
-            s_callbacks.version, fake_version);
-
-    if (fake_version < 5) {
-        return responseStringsWithVersion(fake_version, p, response, responselen);
+    if (s_callbacks.version < 5) {
+        return responseStringsWithVersion(s_callbacks.version, p, response, responselen);
     } else {
         return responseDataCallList(p, response, responselen);
     }
