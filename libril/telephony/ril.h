@@ -196,8 +196,6 @@ typedef struct {
                                    For example, "IP", "IPV6", "IPV4V6", or "PPP". */
     char *          apn;        /* ignored */
     char *          address;    /* An address, e.g., "192.0.1.3" or "2001:db8::1". */
-    int             inactive_reason; /* HTC added filler field */
-    int             unknown_field; /* HTC added filler field */
 } RIL_Data_Call_Response_v4;
 
 /*
@@ -213,7 +211,7 @@ typedef struct {
                                            The unit is miliseconds.
                                            The value < 0 means no value is suggested.
                                            The value 0 means retry should be done ASAP.
-                                           The value of MAX_INT(0x7fffffff) means no retry. */
+                                           The value of INT_MAX(0x7fffffff) means no retry. */
 #endif
     int             cid;        /* Context ID, uniquely identifies this call */
     int             active;     /* 0=inactive, 1=active/physical link down, 2=active/physical link up */
@@ -658,10 +656,6 @@ typedef struct {
                */
 } RIL_CDMA_SignalStrength;
 
-typedef struct {
-    int dbm;
-    int ecno;
-} RIL_ATT_SignalStrength;
 
 typedef struct {
     int dbm;  /* Valid values are positive integers.  This value is the actual RSSI value
@@ -674,6 +668,11 @@ typedef struct {
                */
     int signalNoiseRatio; /* Valid values are 0-8.  8 is the highest signal to noise ratio. */
 } RIL_EVDO_SignalStrength;
+
+typedef struct {
+    int dbm;
+    int ecno;
+} RIL_ATT_SignalStrength;
 
 typedef struct {
     int signalStrength;  /* Valid values are (0-31, 99) as defined in TS 27.007 8.5 */
@@ -693,8 +692,6 @@ typedef struct {
                           * Range: 0 to 15.
                           * INT_MAX : 0x7FFFFFFF denotes invalid value.
                           * Reference: 3GPP TS 36.101 9.2, 9.3, A.4 */
-    int dbm;
-    int ecno;
 } RIL_LTE_SignalStrength;
 
 typedef struct {
@@ -715,7 +712,7 @@ typedef struct {
                           * Range: 0 to 15.
                           * INT_MAX : 0x7FFFFFFF denotes invalid value.
                           * Reference: 3GPP TS 36.101 9.2, 9.3, A.4 */
-   int timingAdvance;   /* timing advance in micro seconds for a one way trip from cell to device.
+    int timingAdvance;   /* timing advance in micro seconds for a one way trip from cell to device.
                           * Approximate distance can be calculated using 300m/us * timingAdvance.
                           * Range: 0 to 0x7FFFFFFE
                           * INT_MAX : 0x7FFFFFFF denotes invalid value.
@@ -3983,6 +3980,21 @@ typedef struct {
  * "response" is an array of RIL_CellInfo.
  */
 #define RIL_UNSOL_CELL_INFO_LIST 1036
+
+/**
+ * Custom responses for HTCQualcommRIL.java
+ */
+#define RIL_UNSOL_ENTER_LPM 1523
+#define RIL_UNSOL_CDMA_3G_INDICATOR 3009
+#define RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR 3012
+#define RIL_UNSOL_CDMA_NETWORK_BASE_PLUSCODE_DIAL 3020
+#define RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE_M7 4802
+#define RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE 6002
+#define RIL_UNSOL_RESPONSE_VOICE_RADIO_TECH_CHANGED 21004
+#define RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED 21005
+#define RIL_UNSOL_RESPONSE_DATA_NETWORK_STATE_CHANGED 21007
+#define RIL_UNSOL_RESPONSE_DATA_NETWORK_STATE_CHANGED_M7 5757
+
 /***********************************************************************/
 
 
@@ -4134,7 +4146,7 @@ void RIL_onRequestComplete(RIL_Token t, RIL_Errno e,
  * @param datalen the length of data in byte
  */
 
-void RIL_onUnsolicitedResponse(int unsolResponse, const void *data,
+void RIL_onUnsolicitedResponse(int unsolResponse, void *data,
                                 size_t datalen);
 
 
