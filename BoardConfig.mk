@@ -41,6 +41,7 @@ TARGET_KERNEL_CUSTOM_TOOLCHAIN_SUFFIX := arm-cortex_a8-linux-gnueabi
 
 # Use libril in the device tree
 BOARD_PROVIDES_LIBRIL := true
+BOARD_RIL_NO_CELLINFOLIST := true
 
 # Touchscreen
 BOARD_USE_LEGACY_TOUCHSCREEN := true
