@@ -171,8 +171,10 @@
 /dev/ppp                  0660   radio      vpn
 
 # sysfs properties
-/sys/devices/virtual/input/input*   enable      0660  root   input
-/sys/devices/virtual/input/input*   poll_delay  0660  root   input
+/sys/devices/virtual/input/input*      enable         0660  root   input
+/sys/devices/virtual/input/input*      poll_delay     0660  root   input
+/sys/devices/virtual/usb_composite/*   enable         0664  root   system
+/sys/devices/virtual/smdpkt/smdcntl*   open_timeout   0664  radio  radio
 
 # permissions for audio
 /dev/msm_amrnb            0660  system       audio
@@ -192,12 +194,6 @@
 /dev/msm_preproc_ctl      0660  system       audio
 /dev/msm_a2dp_in          0640  system       audio
 /dev/msm_amrnb_in         0640  system       audio
-
-# wifi
-/dev/rfkill             0660    root        wifi
-
-# simlock
-/dev/simlock            0660    radio       radio
 
 # permissions for sensors
 /dev/msm_dsps             0660  system       system
