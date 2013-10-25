@@ -1,3 +1,4 @@
+#
 # system.prop for holiday
 #
 
@@ -82,11 +83,6 @@ htc.audio.hac.enable=1
 # wifi
 wifi.interface=wlan0
 wifi.supplicant_scan_interval=60
-
-# This is a high density device with more memory, so larger vm heaps for it.
-dalvik.vm.heapgrowthlimit=64m
-dalvik.vm.heapsize=128m
-dalvik.vm.heapstartsize=5m
 
 #Modify MTU from 1500 to 1472 on 3G network
 ro.ril.set.mtu1472 = 1
