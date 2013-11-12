@@ -206,4 +206,7 @@
     <!-- The default iface on which to monitor data use -->
     <string name="config_datause_iface">rmnet_sdio0</string>
 
+    <!-- Disable lockscreen translucent decor by default -->
+    <bool name="config_enableLockScreenTranslucentDecor">true</bool>
+
 </resources>
