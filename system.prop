@@ -102,7 +102,7 @@ ro.sdcard2 = 1
 ro.phone_fat = 1
 
 # UMS
-persist.sys.usb.config=mass_storage,adb
+persist.sys.usb.config=mtp
 ro.vold.umsdirtyratio=40
 
 # Scrolling-Tweaks
