@@ -27,7 +27,7 @@
 extern "C" {
 #endif
 
-#define RIL_VERSION 8     /* Current version */
+#define RIL_VERSION 9     /* Current version */
 #define RIL_VERSION_MIN 2 /* Minimum RIL_VERSION supported */
 
 #define CDMA_ALPHA_INFO_BUFFER_LENGTH 64
@@ -122,6 +122,7 @@ typedef enum {
     PREF_NET_TYPE_LTE_GSM_WCDMA            = 9, /* LTE, GSM/WCDMA */
     PREF_NET_TYPE_LTE_CMDA_EVDO_GSM_WCDMA  = 10, /* LTE, CDMA, EvDo, GSM/WCDMA */
     PREF_NET_TYPE_LTE_ONLY                 = 11  /* LTE only */
+    PREF_NET_TYPE_LTE_WCDMA 
 } RIL_PreferredNetworkType;
 
 /* Source for cdma subscription */
@@ -196,8 +197,7 @@ typedef struct {
                                    For example, "IP", "IPV6", "IPV4V6", or "PPP". */
     char *          apn;        /* ignored */
     char *          address;    /* An address, e.g., "192.0.1.3" or "2001:db8::1". */
-    int             inactive_reason; /* HTC added filler field */
-    int             unknown_field; /* HTC added filler field */
+
 } RIL_Data_Call_Response_v4;
 
 /*
@@ -236,6 +236,27 @@ typedef struct {
                                    May be empty in which case the addresses represent point
                                    to point connections. */
 } RIL_Data_Call_Response_v6;
+
+typedef enum {
+    RADIO_TECH_3GPP = 1, /* 3GPP Technologies - GSM, WCDMA */
+    RADIO_TECH_3GPP2 = 2 /* 3GPP2 Technologies - CDMA */
+} RIL_RadioTechnologyFamily;
+typedef struct {
+    RIL_RadioTechnologyFamily tech;
+    unsigned char             retry;       /* 0 == not retry, nonzero == retry */
+    int                       messageRef;  /* Valid field if retry is set to nonzero.
+                                              Contains messageRef from RIL_SMS_Response
+                                              corresponding to failed MO SMS.
+                                            */
+
+    union {
+        /* Valid field if tech is RADIO_TECH_3GPP2. See RIL_REQUEST_CDMA_SEND_SMS */
+        RIL_CDMA_SMS_Message* cdmaMessage;
+
+        /* Valid field if tech is RADIO_TECH_3GPP. See RIL_REQUEST_SEND_SMS */
+        char**                gsmMessage;
+    } message;
+} RIL_IMS_SMS_Message;
 
 typedef struct {
     int messageRef;   /* TP-Message-Reference for GSM,
@@ -392,6 +413,7 @@ typedef enum {
     PDP_FAIL_SERVICE_OPTION_NOT_SUBSCRIBED = 0x21, /* no retry */
     PDP_FAIL_SERVICE_OPTION_OUT_OF_ORDER = 0x22,
     PDP_FAIL_NSAPI_IN_USE = 0x23,                  /* no retry */
+    PDP_FAIL_REGULAR_DEACTIVATION = 0x24,   
     PDP_FAIL_ONLY_IPV4_ALLOWED = 0x32,             /* no retry */
     PDP_FAIL_ONLY_IPV6_ALLOWED = 0x33,             /* no retry */
     PDP_FAIL_ONLY_SINGLE_BEARER_ALLOWED = 0x34,
@@ -689,8 +711,7 @@ typedef struct {
                           * Range: 0 to 15.
                           * INT_MAX : 0x7FFFFFFF denotes invalid value.
                           * Reference: 3GPP TS 36.101 9.2, 9.3, A.4 */
-    int dbm;
-    int ecno;
+
 } RIL_LTE_SignalStrength;
 
 typedef struct {
@@ -3488,6 +3509,64 @@ typedef struct {
  *  GENERIC_FAILURE
  */
 #define RIL_REQUEST_SET_UNSOL_CELL_INFO_LIST_RATE 110
+
+/**
+ * RIL_REQUEST_SET_INITIAL_ATTACH_APN
+ *
+ * Set an apn to initial attach network
+ * "response" is NULL
+ *
+ * Valid errors:
+ *  SUCCESS
+ *  RADIO_NOT_AVAILABLE (radio resetting)
+ *  GENERIC_FAILURE
+ *  SUBSCRIPTION_NOT_AVAILABLE
+ */
+#define RIL_REQUEST_SET_INITIAL_ATTACH_APN 111
+
+/**
+ * RIL_REQUEST_IMS_REGISTRATION_STATE
+ *
+ * Request current IMS registration state
+ *
+ * "data" is NULL
+ *
+ * "response" is int *
+ * ((int *)response)[0] is registration state:
+ *              0 - Not registered
+ *              1 - Registered
+ * ((int *)response)[1] is bitmap of the supported services:
+ *          & 0x1 - SMS supported
+ *
+ * If IMS is registered and supports SMS, then ((int *) response)[2]
+ * must follow with IMS SMS format:
+ *
+ * ((int *) response)[2] is of type const RIL_IMS_SMS_Format
+ */
+#define RIL_REQUEST_IMS_REGISTRATION_STATE 112
+
+/**
+ * RIL_REQUEST_IMS_SEND_SMS
+ *
+ * Send a SMS message over IMS
+ *
+ * "data" is const RIL_IMS_SMS_Message *
+ *
+ * "response" is a const RIL_SMS_Response *
+ *
+ * Based on the return error, caller decides to resend if sending sms
+ * fails. SMS_SEND_FAIL_RETRY means retry, and other errors means no retry.
+ * In case of retry, data is encoded based on Voice Technology available.
+ *
+ * Valid errors:
+ *  SUCCESS
+ *  RADIO_NOT_AVAILABLE
+ *  SMS_SEND_FAIL_RETRY
+ *  FDN_CHECK_FAILURE
+ *  GENERIC_FAILURE
+ *
+ */
+#define RIL_REQUEST_IMS_SEND_SMS 113
 /***********************************************************************/
 
 
@@ -3977,6 +4056,25 @@ typedef struct {
  * "response" is an array of RIL_CellInfo.
  */
 #define RIL_UNSOL_CELL_INFO_LIST 1036
+
+/*
+ * RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED
+ *
+ * Called when IMS registration state has changed
+ *
+ * "data" is int *
+ * ((int *)response)[0] is registration state:
+ *              0 - Not registered
+ *              1 - Registered
+ * ((int *)response)[1] is bitmap of the services supported:
+ *          & 0x1 - SMS supported
+ *
+ * If IMS is registered and supports SMS, then ((int *) response)[2]
+ * must follow with IMS SMS format:
+ *
+ * ((int *) response)[2] is of type const RIL_IMS_SMS_Format
+ */
+#define RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED 1037
 /***********************************************************************/
 
 
@@ -4045,6 +4143,13 @@ typedef struct {
     RIL_GetVersion getVersion;
 } RIL_RadioFunctions;
 
+typedef struct {
+    char *apn;
+    char *protocol;
+    int authtype;
+    char *username;
+    char *password;
+} RIL_InitialAttachApn;
 #ifdef RIL_SHLIB
 struct RIL_Env {
     /**
